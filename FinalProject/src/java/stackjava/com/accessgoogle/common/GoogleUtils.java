@@ -6,11 +6,18 @@ package stackjava.com.accessgoogle.common;
 
 import java.io.IOException;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.fluent.Form;
+import org.apache.http.client.fluent.Request;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 /**
  *
  * @author iamge
  */
-class GoogleUtils {
+public class GoogleUtils {
 
     public static String getToken(final String code) throws ClientProtocolException, IOException {
         String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
@@ -19,6 +26,7 @@ class GoogleUtils {
                         .add("redirect_uri", Constants.GOOGLE_REDIRECT_URI).add("code", code)
                         .add("grant_type", Constants.GOOGLE_GRANT_TYPE).build())
                 .execute().returnContent().asString();
+
         JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
         String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
         return accessToken;
@@ -30,6 +38,7 @@ class GoogleUtils {
         GooglePojo googlePojo = new Gson().fromJson(response, GooglePojo.class);
         System.out.println(googlePojo);
         return googlePojo;
+
     }
 
 }
