@@ -1,2 +1,2 @@
 # PRJ301_FinalProject
-Login with google - error
+FinalProject 2 - login with google - error
